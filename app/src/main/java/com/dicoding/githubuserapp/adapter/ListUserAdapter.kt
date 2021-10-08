@@ -1,6 +1,5 @@
 package com.dicoding.githubuserapp.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -25,7 +24,6 @@ class ListUserAdapter(private val listUser: ArrayList<User>) : RecyclerView.Adap
     }
 
     // Bind user holder data with components
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val userData = listUser[position]
         viewHolder.binding.userPhoto.setImageResource(userData.avatar)
