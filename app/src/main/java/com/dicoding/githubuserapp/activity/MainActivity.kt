@@ -1,6 +1,5 @@
 package com.dicoding.githubuserapp.activity
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
@@ -30,7 +29,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val listUsers: ArrayList<User>
-        @SuppressLint("Recycle")
         get() {
             // Get users data from resources
             val dataUsername = resources.getStringArray(R.array.username)
