@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.UserDetailActivity">
+
+    <FrameLayout
+        android:id="@+id/detail_avatar_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/de"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:src="@drawable/gradient_background"
+            android:contentDescription="@string/detail_user_content_description" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/detail_avatar"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/detail_name"
+        style="@style/TextContent.UserDetail.Title"
+        android:layout_toEndOf="@+id/detail_avatar_wrapper"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_avatar_wrapper"
+        tools:text="Full Name" />
+
+    <TextView
+        android:id="@+id/detail_username"
+        style="@style/TextContent.TextMuted"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_name"
+        tools:text="\@username" />
+
+    <TextView
+        android:id="@+id/detail_company"
+        style="@style/TextContent.UserDetail"
+        android:layout_marginTop="15dp"
+        app:drawableLeftCompat="@drawable/ic_baseline_business_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_username"
+        tools:text="Company" />
+
+    <TextView
+        android:id="@+id/detail_location"
+        style="@style/TextContent.UserDetail"
+        app:drawableLeftCompat="@drawable/ic_baseline_location_on_24"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_company"
+        tools:text="Location" />
+
+    <LinearLayout
+        android:id="@+id/detail_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_location">
+
+        <LinearLayout
+            android:id="@+id/repository_wrapper"
+            style="@style/UserDetailInfoLayout">
+
+            <TextView
+                style="@style/TextContent.TextMuted"
+                android:text="@string/repository" />
+
+            <TextView
+                android:id="@+id/detail_repository"
+                style="@style/UserDetailInfoContent"
+                tools:text="500" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/follower_wrapper"
+            style="@style/UserDetailInfoLayout"
+            android:layout_marginStart="10dp">
+
+            <TextView
+                style="@style/TextContent.TextMuted"
+                android:text="@string/follower" />
+
+            <TextView
+                android:id="@+id/detail_follower"
+                style="@style/UserDetailInfoContent"
+                tools:text="500" />
+        </LinearLayout>
+        <LinearLayout
+            style="@style/UserDetailInfoLayout"
+            android:layout_marginStart="10dp">
+
+            <TextView
+                style="@style/TextContent.TextMuted"
+                android:text="@string/following" />
+
+            <TextView
+                android:id="@+id/detail_following"
+                style="@style/UserDetailInfoContent"
+                tools:text="500" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/detail_share_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:padding="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/share_btn_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_info"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

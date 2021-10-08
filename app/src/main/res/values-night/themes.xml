@@ -1,0 +1,75 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.GitHubUserApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryVariant">@color/primaryLightColor</item>
+        <item name="colorOnPrimary">@color/onPrimaryNightColor</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/secondaryNightColor</item>
+        <item name="colorSecondaryVariant">@color/secondaryNightLightColor</item>
+        <item name="colorOnSecondary">@color/onSecondaryColor</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <!-- Text Styling  -->
+
+    <style name="TextContent">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!--  Text Muted  -->
+    <style name="TextContent.TextMuted">
+        <item name="android:textColor">@color/textMuted</item>
+    </style>
+
+    <!--  Text Muted Card  -->
+    <style name="TextContent.TextMuted.Card">
+        <item name="android:layout_marginTop">5dp</item>
+    </style>
+
+    <!--  User Detail Info Layout  -->
+    <style name="UserDetailInfoLayout">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <!--  User Detail Info Styling  -->
+    <style name="UserDetailInfoContent">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!--  User Detail Text Styling  -->
+
+    <style name="TextContent.UserDetail">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+    </style>
+
+    <style name="TextContent.UserDetail.Title">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">35sp</item>
+        <item name="android:layout_marginTop">30dp</item>
+    </style>
+
+    <!-- Splash Screen Styling -->
+
+    <style name="SplashScreenStyle" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+</resources>
