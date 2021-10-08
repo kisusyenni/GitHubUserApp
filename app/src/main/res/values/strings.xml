@@ -5,6 +5,7 @@
     <string name="following">Following</string>
     <string name="share_btn_content">Share My Profile</string>
     <string name="detail_user_content_description">User Image</string>
+    <string name="username">"@%s"</string>
 
     <!-- Username Data -->
     <string-array name="username">

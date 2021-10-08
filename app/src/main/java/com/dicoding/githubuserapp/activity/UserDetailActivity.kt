@@ -1,18 +1,15 @@
 package com.dicoding.githubuserapp.activity
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.dicoding.githubuserapp.R
 import com.dicoding.githubuserapp.data.User
 import com.dicoding.githubuserapp.databinding.ActivityUserDetailBinding
 
 class UserDetailActivity : AppCompatActivity(){
     private lateinit var binding: ActivityUserDetailBinding
-    companion object {
-        const val EXTRA_USER = "extra_user"
-    }
-    @SuppressLint("SetTextI18n")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -27,7 +24,7 @@ class UserDetailActivity : AppCompatActivity(){
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Bind user data to components
-        binding.detailUsername.text = "@${user.username}"
+        binding.detailUsername.text = getString(R.string.username, user.username)
         binding.detailName.text = user.name
         binding.detailAvatar.setImageResource(user.avatar)
         binding.detailCompany.text = user.company
@@ -50,4 +47,7 @@ class UserDetailActivity : AppCompatActivity(){
         }
     }
 
+    companion object {
+        const val EXTRA_USER = "extra_user"
+    }
 }
