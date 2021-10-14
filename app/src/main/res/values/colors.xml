@@ -8,7 +8,7 @@
     <color name="secondaryDarkColor">#000000</color>
     <color name="secondaryNightColor">#ab47bc</color>
     <color name="secondaryNightLightColor">#df78ef</color>
-    <color name="onPrimaryColor">#212121</color>
+    <color name="onPrimaryColor">#ffffff</color>
     <color name="onPrimaryNightColor">#ffffff</color>
     <color name="onSecondaryColor">#ffffff</color>
     <color name="textMuted">#546e7a</color>

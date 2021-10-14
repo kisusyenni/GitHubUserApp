@@ -3,10 +3,12 @@ package com.dicoding.githubuserapp.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.dicoding.githubuserapp.data.User
+import com.bumptech.glide.Glide
+import com.dicoding.githubuserapp.R
+import com.dicoding.githubuserapp.model.User
 import com.dicoding.githubuserapp.databinding.ItemRowUserBinding
 
-class ListUserAdapter(private val listUser: ArrayList<User>) : RecyclerView.Adapter<ListUserAdapter.ViewHolder>() {
+class ListUserAdapter(private val listUser: List<User>) : RecyclerView.Adapter<ListUserAdapter.ViewHolder>() {
 
     private lateinit var onItemClickCallback: OnItemClickCallback
 
@@ -26,18 +28,18 @@ class ListUserAdapter(private val listUser: ArrayList<User>) : RecyclerView.Adap
     // Bind user holder data with components
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val userData = listUser[position]
-        viewHolder.binding.userPhoto.setImageResource(userData.avatar)
-        viewHolder.binding.tvUserName.text = userData.name
-        viewHolder.binding.tvUserUsername.text = "@${userData.username}"
-        viewHolder.binding.tvUserRepository.text = "Repository: ${userData.repository}"
+        Glide.with(viewHolder.itemView.context)
+            .load(userData.avatar)
+            .into(viewHolder.binding.userPhoto)
+        viewHolder.binding.tvUserUsername.text = viewHolder.itemView.context.getString(R.string.username, userData.username)
 
         // On user item click, send callback to intent to detail page
-        viewHolder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(listUser[viewHolder.adapterPosition]) }
+        viewHolder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(listUser[viewHolder.adapterPosition].username) }
     }
 
     override fun getItemCount(): Int = listUser.size
 
     interface OnItemClickCallback {
-        fun onItemClicked(user: User)
+        fun onItemClicked(username: String)
     }
 }

@@ -1,0 +1,35 @@
+package com.dicoding.githubuserapp.network
+
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import okhttp3.Interceptor
+import okhttp3.Request
+
+
+class ApiConfig {
+    companion object{
+        fun getApiService(): ApiService {
+            val token = "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"
+            val loggingInterceptor =
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+//            val client = OkHttpClient.Builder()
+//                .addInterceptor(loggingInterceptor)
+//                .build()
+            val client = OkHttpClient.Builder().addInterceptor(Interceptor { chain ->
+                val newRequest: Request = chain.request().newBuilder()
+                    .addHeader("Authorization", "Bearer $token")
+                    .build()
+                chain.proceed(newRequest)
+            }).build()
+
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://api.github.com/")
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+            return retrofit.create(ApiService::class.java)
+        }
+    }
+}

@@ -6,8 +6,8 @@
     <gradient
         android:type="linear"
         android:angle="0"
-        android:startColor="@color/primaryColor"
-        android:endColor="@color/primaryLightColor"/>
+        android:startColor="@color/secondaryColor"
+        android:endColor="@color/secondaryDarkColor"/>
     <size
         android:width="82dp"
         android:height="82dp" />
