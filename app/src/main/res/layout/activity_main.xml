@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
     <TextView
-        android:id="@+id/notFoundText"
+        android:id="@+id/mainMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

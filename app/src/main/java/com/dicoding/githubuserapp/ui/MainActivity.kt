@@ -5,32 +5,30 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.githubuserapp.R
 import com.dicoding.githubuserapp.adapter.ListUserAdapter
 import com.dicoding.githubuserapp.databinding.ActivityMainBinding
 import com.dicoding.githubuserapp.model.User
-import com.dicoding.githubuserapp.model.UserSearchResponse
-import com.dicoding.githubuserapp.model.UsersResponseItem
-import com.dicoding.githubuserapp.network.ApiConfig
 import com.dicoding.githubuserapp.ui.detail.UserDetailActivity
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.dicoding.githubuserapp.viewmodel.MainViewModel
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var activityMainBinding: ActivityMainBinding
     private lateinit var rvUsers: RecyclerView
-    val listUsers = ArrayList<User>()
+    private lateinit var message : TextView
+    private var listUsers = ArrayList<User>()
+    private lateinit var mainViewModel : MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +38,9 @@ class MainActivity : AppCompatActivity() {
         rvUsers = activityMainBinding.rvUsers
         rvUsers.setHasFixedSize(true)
 
+        // Bind message text view
+        message = activityMainBinding.mainMessage
+
         // Config layout by screen orientation
         if (applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             rvUsers.layoutManager = GridLayoutManager(this, 3)
@@ -47,57 +48,42 @@ class MainActivity : AppCompatActivity() {
             rvUsers.layoutManager = GridLayoutManager(this, 2)
         }
 
-        // Get users list
-        getUsersList()
+        message.visibility = View.GONE
 
-    }
+        // Initialize mainViewModel
+        mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(MainViewModel::class.java)
 
-    // Get user list data from Github API
-    private fun getUsersList() {
-        showLoading(true)
-        val client = ApiConfig.getApiService().getUsers()
-        client.enqueue(object : Callback<List<UsersResponseItem>> {
-            override fun onResponse(
-                call: Call<List<UsersResponseItem>>,
-                response: Response<List<UsersResponseItem>>
-            ) {
-                showLoading(false)
-                val responseBody = response.body()
-                if (responseBody != null) {
-
-                    for(user in responseBody) {
-                        val userData = User(user.login, user.avatarUrl)
-                        listUsers.add(userData)
-                    }
-
-                    showRecycler(listUsers)
-
-                } else {
-
-                    Log.d(TAG, "onFailure: ${response.message()}")
-                }
-            }
-
-            override fun onFailure(call: Call<List<UsersResponseItem>>, t: Throwable) {
-                showLoading(false)
-                Log.e(TAG, "onFailure: ${t.message}")
-            }
+        // Observe users list
+        mainViewModel.usersList.observe(this, { users ->
+            users?.let { listUsers = it as ArrayList<User> }
+            showRecycler(listUsers)
         })
+
+        // Observe progress bar loading
+        mainViewModel.isLoading.observe(this, {
+            showLoading(it)
+        })
+
     }
 
     private fun showRecycler(list: ArrayList<User>) {
-        // Bind list data to ListUserAdapter
-        val listUserAdapter = ListUserAdapter(list)
-        rvUsers.adapter = listUserAdapter
+        if(list.lastIndex > 0) {
+            // Bind list data to ListUserAdapter
+            val listUserAdapter = ListUserAdapter(list)
+            rvUsers.adapter = listUserAdapter
 
-        // Set user list item on click callback and intent to detail page
-        listUserAdapter.setOnItemClickCallback(object : ListUserAdapter.OnItemClickCallback {
-            override fun onItemClicked(username: String) {
-                val userDetailIntent = Intent(this@MainActivity, UserDetailActivity::class.java)
-                userDetailIntent.putExtra(UserDetailActivity.EXTRA_USER, username)
-                startActivity(userDetailIntent)
-            }
-        })
+            // Set user list item on click callback and intent to detail page
+            listUserAdapter.setOnItemClickCallback(object : ListUserAdapter.OnItemClickCallback {
+                override fun onItemClicked(username: String) {
+                    val userDetailIntent = Intent(this@MainActivity, UserDetailActivity::class.java)
+                    userDetailIntent.putExtra(UserDetailActivity.EXTRA_USER, username)
+                    startActivity(userDetailIntent)
+                }
+            })
+        } else {
+            message.visibility = View.VISIBLE
+            message.text = resources.getString(R.string.main_empty_msg)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -108,14 +94,28 @@ class MainActivity : AppCompatActivity() {
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchItem = menu.findItem(R.id.search)
         val searchView = searchItem.actionView as SearchView
+        searchView.maxWidth = Integer.MAX_VALUE
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
         searchView.queryHint = resources.getString(R.string.search_hint)
+
+        // Observes search query
+        var query: String? = null
+        mainViewModel.searchQuery.observe(this, {
+            query = it
+            if(query !== null && query !== "") {
+                searchView.isIconified = false
+                searchView.setQuery(query, false)
+            }
+        })
+
+
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                searchUserQuery(query)
+                mainViewModel.searchUserQuery(query)
                 return true
             }
             override fun onQueryTextChange(newText: String): Boolean {
+                if(newText != "") mainViewModel.saveSearchQuery(newText)
                 return false
             }
         })
@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity() {
         //Expand collapse listener of searchView on action bar
         searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
-                showRecycler(listUsers)
+                mainViewModel.collapseSearchView(true)
                 return true
             }
 
@@ -135,48 +135,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        val progressBar: View = activityMainBinding.progressBar
-        if (isLoading) {
-            progressBar.visibility = View.VISIBLE
-        } else {
-            progressBar.visibility = View.GONE
-        }
-    }
-
-    // Get search by query result list
-    private fun searchUserQuery(username: String) {
-        showLoading(true)
-        val client = ApiConfig.getApiService().getSearchResult(username)
-        client.enqueue(object : Callback<UserSearchResponse> {
-            override fun onResponse(
-                call: Call<UserSearchResponse>,
-                response: Response<UserSearchResponse>
-            ) {
-                showLoading(false)
-                val responseBody = response.body()
-                if (responseBody != null) {
-                    val results = ArrayList<User>()
-                    for(user in responseBody.items) {
-                        val userData = User(user.login, user.avatarUrl)
-                        results.add(userData)
-                    }
-                    showRecycler(results)
-
-                } else {
-                    activityMainBinding.notFoundText.text = resources.getString(R.string.main_not_found_msg, username)
-                    Log.d(TAG, "onFailure: ${response.message()}")
-                }
-            }
-
-            override fun onFailure(call: Call<UserSearchResponse>, t: Throwable) {
-                showLoading(false)
-                Log.e(TAG, "onFailure: ${t.message}")
-            }
-        })
+        activityMainBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {
         private const val TAG = "MainActivity"
     }
-
 }
