@@ -5,9 +5,6 @@ import retrofit2.Call
 import retrofit2.http.*
 import retrofit2.http.GET
 
-
-
-
 interface ApiService {
     @GET("users")
     fun getUsers(
@@ -32,6 +29,5 @@ interface ApiService {
     fun getSearchResult(
         @Query("q") username: String
     ): Call<UserSearchResponse>
-
 
 }

@@ -11,18 +11,20 @@ import okhttp3.Request
 class ApiConfig {
     companion object{
         fun getApiService(): ApiService {
-            val token = "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"
             val loggingInterceptor =
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-//            val client = OkHttpClient.Builder()
-//                .addInterceptor(loggingInterceptor)
-//                .build()
-            val client = OkHttpClient.Builder().addInterceptor(Interceptor { chain ->
-                val newRequest: Request = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer $token")
-                    .build()
-                chain.proceed(newRequest)
-            }).build()
+            val client = OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build()
+
+            // With Github Token
+//            val token = "" // add your github token
+//            val client = OkHttpClient.Builder().addInterceptor(Interceptor { chain ->
+//                val newRequest: Request = chain.request().newBuilder()
+//                    .addHeader("Authorization", "Bearer $token")
+//                    .build()
+//                chain.proceed(newRequest)
+//            }).build()
 
             val retrofit = Retrofit.Builder()
                 .baseUrl("https://api.github.com/")

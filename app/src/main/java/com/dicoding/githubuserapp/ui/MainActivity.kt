@@ -9,7 +9,6 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
@@ -22,7 +21,6 @@ import com.dicoding.githubuserapp.model.UserSearchResponse
 import com.dicoding.githubuserapp.model.UsersResponseItem
 import com.dicoding.githubuserapp.network.ApiConfig
 import com.dicoding.githubuserapp.ui.detail.UserDetailActivity
-import com.dicoding.githubuserapp.viewmodel.MainViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,14 +28,9 @@ import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel: MainViewModel by viewModels()
     private lateinit var activityMainBinding: ActivityMainBinding
     private lateinit var rvUsers: RecyclerView
     val listUsers = ArrayList<User>()
-
-    companion object {
-        private const val TAG = "MainActivity"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +52,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    // Get user list data from Github API
     private fun getUsersList() {
         showLoading(true)
         val client = ApiConfig.getApiService().getUsers()
@@ -110,7 +104,7 @@ class MainActivity : AppCompatActivity() {
         val inflater = menuInflater
         inflater.inflate(R.menu.option_menu, menu)
 
-        // searchView
+        // Add search functionality to action bar
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchItem = menu.findItem(R.id.search)
         val searchView = searchItem.actionView as SearchView
@@ -149,6 +143,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Get search by query result list
     private fun searchUserQuery(username: String) {
         showLoading(true)
         val client = ApiConfig.getApiService().getSearchResult(username)
@@ -179,4 +174,9 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
+    companion object {
+        private const val TAG = "MainActivity"
+    }
+
 }

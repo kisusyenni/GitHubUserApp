@@ -33,7 +33,6 @@ class UserDetailActivity : AppCompatActivity(){
         // Get username from intent
         username = intent.getStringExtra(EXTRA_USER).toString()
 
-
         // attach fragment to activity
         val detailPagerAdapter = DetailPagerAdapter(this, username)
         val viewPager: ViewPager2 = binding.viewPager
@@ -53,6 +52,7 @@ class UserDetailActivity : AppCompatActivity(){
         getUserDetail()
     }
 
+    // Get user detail data from Github API
     private fun getUserDetail() {
         showLoading(true)
         val client = ApiConfig.getApiService().getUserDetail(username)
