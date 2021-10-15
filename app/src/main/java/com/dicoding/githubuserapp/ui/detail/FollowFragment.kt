@@ -82,7 +82,7 @@ class FollowFragment : Fragment() {
             ) {
                 showLoading(false)
                 val responseBody = response.body()
-                if (responseBody != null) {
+                if (responseBody != null && responseBody.lastIndex > 0) {
                     for(user in responseBody) {
                         val userData = User(user.login, user.avatarUrl)
                         followDataList.add(userData)
@@ -114,14 +114,14 @@ class FollowFragment : Fragment() {
             ) {
                 showLoading(false)
                 val responseBody = response.body()
-                if (responseBody != null) {
+                if (responseBody != null && responseBody.lastIndex > 0) {
                     for(user in responseBody) {
                         val userData = User(user.login, user.avatarUrl)
                         followDataList.add(userData)
                     }
                     showFragmentRecycler(followDataList)
                 } else {
-                    errorMessage?.text = resources.getString(R.string.follow_fragment_empty_msg, "a follower")
+                    errorMessage?.text = resources.getString(R.string.follow_fragment_empty_msg, "follow anyone")
                     errorMessage?.visibility = View.VISIBLE
                     Log.d(TAG, "onFailure: ${response.message()}")
                 }
