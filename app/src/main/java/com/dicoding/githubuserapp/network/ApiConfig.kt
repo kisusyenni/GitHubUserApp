@@ -17,7 +17,7 @@ class ApiConfig {
                 .addInterceptor(loggingInterceptor)
                 .build()
 
-            // With Github Token
+//            With Github Token
 //            val token = "" // add your github token
 //            val client = OkHttpClient.Builder().addInterceptor(Interceptor { chain ->
 //                val newRequest: Request = chain.request().newBuilder()
