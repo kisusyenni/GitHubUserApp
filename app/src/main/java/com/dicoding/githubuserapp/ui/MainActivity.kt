@@ -27,8 +27,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var activityMainBinding: ActivityMainBinding
     private lateinit var rvUsers: RecyclerView
     private lateinit var message : TextView
-    private var listUsers = ArrayList<User>()
     private lateinit var mainViewModel : MainViewModel
+    private var query: String? = null
+    private var listUsers = ArrayList<User>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,10 +65,15 @@ class MainActivity : AppCompatActivity() {
             showLoading(it)
         })
 
+        // Observe search query
+        mainViewModel.searchQuery.observe(this, {
+            query = it
+        })
+
     }
 
     private fun showRecycler(list: ArrayList<User>) {
-        if(list.lastIndex > 0) {
+        if(list.size > 0) {
             // Bind list data to ListUserAdapter
             val listUserAdapter = ListUserAdapter(list)
             rvUsers.adapter = listUserAdapter
@@ -80,6 +86,7 @@ class MainActivity : AppCompatActivity() {
                     startActivity(userDetailIntent)
                 }
             })
+            message.visibility = View.GONE
         } else {
             message.visibility = View.VISIBLE
             message.text = resources.getString(R.string.main_empty_msg)
@@ -99,19 +106,13 @@ class MainActivity : AppCompatActivity() {
         searchView.queryHint = resources.getString(R.string.search_hint)
 
         // Observes search query
-        var query: String? = null
-        mainViewModel.searchQuery.observe(this, {
-            query = it
-            if(query !== null && query !== "") {
-                searchView.isIconified = false
-                searchView.setQuery(query, false)
-            }
-        })
-
+        searchView.setQuery(query, false)
+        searchView.setIconifiedByDefault(query !== "")
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 mainViewModel.searchUserQuery(query)
+                if(query != "") mainViewModel.saveSearchQuery(query)
                 return true
             }
             override fun onQueryTextChange(newText: String): Boolean {
