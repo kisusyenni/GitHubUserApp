@@ -138,11 +138,7 @@ class FollowFragment : Fragment() {
 
     private fun showLoading(isLoading: Boolean) {
         val progressBar: View? = view?.findViewById(R.id.fragmentProgressBar)
-        if (isLoading) {
-            progressBar?.visibility = View.VISIBLE
-        } else {
-            progressBar?.visibility = View.GONE
-        }
+        progressBar?.visibility = if(isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {

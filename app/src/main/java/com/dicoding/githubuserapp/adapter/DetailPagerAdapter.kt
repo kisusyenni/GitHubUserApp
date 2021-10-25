@@ -5,8 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.dicoding.githubuserapp.ui.detail.FollowFragment
 
-class DetailPagerAdapter(activity: AppCompatActivity, username: String) : FragmentStateAdapter(activity) {
-    private val username = username
+class DetailPagerAdapter(activity: AppCompatActivity, private val username: String) : FragmentStateAdapter(activity) {
     override fun getItemCount(): Int {
         return 2
     }
