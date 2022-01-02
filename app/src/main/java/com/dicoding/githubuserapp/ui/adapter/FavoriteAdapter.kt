@@ -14,6 +14,10 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>
     private lateinit var onItemClickCallback: OnItemClickCallback
     private val listFavorite = ArrayList<Favorite>()
 
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
+    }
+
     fun setListFavorites(listFavorite: List<Favorite>) {
         val diffCallback = FavoriteDiffCallback(this.listFavorite, listFavorite)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
@@ -26,14 +30,14 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>
         return FavoriteViewHolder(binding)
     }
     override fun onBindViewHolder(viewHolder: FavoriteViewHolder, position: Int) {
-        val userData = listFavorite[position]
+        val favoriteData = listFavorite[position]
         Glide.with(viewHolder.itemView.context)
-            .load(userData.avatar)
+            .load(favoriteData.avatar)
             .into(viewHolder.binding.userPhoto)
-        viewHolder.binding.tvUserUsername.text = viewHolder.itemView.context.getString(R.string.username, userData.username)
+        viewHolder.binding.tvUserUsername.text = viewHolder.itemView.context.getString(R.string.username, favoriteData.username)
 
         // On user item click, send callback to intent to detail page
-        viewHolder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(listFavorite[viewHolder.adapterPosition].username) }
+        viewHolder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(favoriteData) }
     }
     override fun getItemCount(): Int {
         return listFavorite.size
@@ -41,6 +45,6 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>
     inner class FavoriteViewHolder(var binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root)
 
     interface OnItemClickCallback {
-        fun onItemClicked(username: String)
+        fun onItemClicked(data: Favorite)
     }
 }

@@ -1,16 +1,24 @@
 package com.dicoding.githubuserapp.ui.detail
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.dicoding.githubuserapp.database.Favorite
 import com.dicoding.githubuserapp.model.UserDetailResponse
 import com.dicoding.githubuserapp.network.ApiConfig
+import com.dicoding.githubuserapp.repository.FavoriteRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class UserDetailViewModel : ViewModel() {
+class UserDetailViewModel(application: Application) : ViewModel() {
+    private val mFavoriteRepository: FavoriteRepository = FavoriteRepository(application)
+
     private val _userDetail = MutableLiveData<UserDetailResponse>()
     val userDetail: LiveData<UserDetailResponse> = _userDetail
 
@@ -48,5 +56,24 @@ class UserDetailViewModel : ViewModel() {
 
     fun sendUsername(data: String) {
         getUserDetail(data)
+    }
+
+    fun checkUser(id: Int) = mFavoriteRepository.check(id)
+
+    fun addToFavorite(username: String, id: Int, avatarUrl: String?) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val user = Favorite(
+                id,
+                username,
+                avatarUrl
+            )
+            mFavoriteRepository.insert(user)
+        }
+    }
+
+    fun removeFromFavorite(id: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            mFavoriteRepository.delete(id)
+        }
     }
 }

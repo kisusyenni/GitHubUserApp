@@ -12,4 +12,5 @@
     <color name="onPrimaryNightColor">#ffffff</color>
     <color name="onSecondaryColor">#ffffff</color>
     <color name="textMuted">#546e7a</color>
+    <color name="favorite">#E91E63</color>
 </resources>

@@ -14,15 +14,27 @@
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/ic_baseline_dark_mode_24"
         android:drawablePadding="8dp"
-        android:padding="8dp"
+        android:padding="16dp"
         android:text="@string/dark_mode" />
 
-    <Button
+    <View
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <TextView
         android:id="@+id/favorite_intent_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawablePadding="8dp"
         android:text="@string/favorite_user"
-        android:padding="8dp"
-        app:drawableLeftCompat="@drawable/ic_favorite_24" />
+        android:padding="16dp"
+        app:drawableLeftCompat="@drawable/ic_favorite_24_pink" />
+
+    <View
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
 </LinearLayout>

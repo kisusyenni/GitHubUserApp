@@ -10,22 +10,26 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.dicoding.githubuserapp.R
-import com.dicoding.githubuserapp.ui.adapter.DetailPagerAdapter
-import com.dicoding.githubuserapp.database.Favorite
 import com.dicoding.githubuserapp.databinding.ActivityUserDetailBinding
 import com.dicoding.githubuserapp.helper.ViewModelFactory
 import com.dicoding.githubuserapp.model.UserDetailResponse
-import com.dicoding.githubuserapp.ui.favorite.FavoriteAddUpdateViewModel
+import com.dicoding.githubuserapp.ui.adapter.DetailPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class UserDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityUserDetailBinding
     private lateinit var username: String
-    private var favorite: Favorite? = null
+    private lateinit var avatar: String
+    private var id: Int = 0
+//    private var favorite: Favorite? = null
 
-    private lateinit var favoriteAddUpdateViewModel: FavoriteAddUpdateViewModel
+    private lateinit var userDetailViewModel: UserDetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +38,8 @@ class UserDetailActivity : AppCompatActivity() {
 
         // Get username from intent
         username = intent.getStringExtra(EXTRA_USER).toString()
+        avatar = intent.getStringExtra(EXTRA_AVATAR).toString()
+        id = intent.getIntExtra(EXTRA_ID, 0)
 
         // attach fragment to activity
         val detailPagerAdapter = DetailPagerAdapter(this, username)
@@ -51,28 +57,54 @@ class UserDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // get user detail data from Live Data
-        val userDetailViewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        )[UserDetailViewModel::class.java]
+        userDetailViewModel = obtainViewModel(this@UserDetailActivity)
         userDetailViewModel.sendUsername(username)
         userDetailViewModel.userDetail.observe(this, { data ->
             setUserDetail(data)
 
-            favorite.let { favorite ->
-                favorite?.username = username
-                favorite?.avatar = data.avatarUrl
+//            favorite.let { favorite ->
+//                favorite?.username = username
+//                favorite?.avatar = data.avatarUrl
+//            }
+            var isFavorite = false
+            CoroutineScope(Dispatchers.IO).launch {
+                val count = userDetailViewModel.checkUser(id)
+                withContext(Dispatchers.Main) {
+                    if (count > 0) {
+                        setStatusFavorite(true)
+                        isFavorite = true
+                    } else {
+                        setStatusFavorite(false)
+                    }
+                }
             }
+
+            binding.fabFavorite.setOnClickListener {
+                isFavorite = !isFavorite
+
+                if (isFavorite) {
+                    userDetailViewModel.addToFavorite(username, id, avatar)
+                    Toast.makeText(
+                        this@UserDetailActivity, resources.getString(R.string.add_to_favorite),
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    userDetailViewModel.removeFromFavorite(id)
+                    Toast.makeText(
+                        this@UserDetailActivity, resources.getString(R.string.remove_from_favorite),
+                        Toast.LENGTH_LONG
+                    )
+                        .show()
+                }
+
+                setStatusFavorite(isFavorite)
+            }
+
+
         })
         userDetailViewModel.isLoading.observe(this, {
             showLoading(it)
         })
-
-        favoriteAddUpdateViewModel = obtainViewModel(this@UserDetailActivity)
-
-        binding.favoriteCheckBox.setOnClickListener {
-            setFavoriteListener()
-        }
 
     }
 
@@ -104,33 +136,24 @@ class UserDetailActivity : AppCompatActivity() {
         binding.detailProgressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
-    // set favorite button onclick
-    private fun setFavoriteListener() {
-        val isChecked = binding.favoriteCheckBox.isChecked
-        if (favorite != null) {
-            if (isChecked) {
-                favoriteAddUpdateViewModel.insert(favorite!!)
-                showToast(getString(R.string.add_to_favorite))
-            } else {
-                favoriteAddUpdateViewModel.delete(favorite!!)
-                showToast(getString(R.string.remove_from_favorite))
-            }
+
+    private fun setStatusFavorite(isFavorite: Boolean) {
+        if (isFavorite) {
+            binding.fabFavorite.setImageResource(R.drawable.ic_favorite_24)
+        } else {
+            binding.fabFavorite.setImageResource(R.drawable.ic_favorite_border_24)
         }
-
-        finish()
     }
 
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun obtainViewModel(activity: AppCompatActivity): FavoriteAddUpdateViewModel {
+    private fun obtainViewModel(activity: AppCompatActivity): UserDetailViewModel {
         val factory = ViewModelFactory.getInstance(activity.application)
-        return ViewModelProvider(activity, factory)[FavoriteAddUpdateViewModel::class.java]
+        return ViewModelProvider(activity, factory)[UserDetailViewModel::class.java]
     }
 
     companion object {
         const val EXTRA_USER = "extra_user"
+        const val EXTRA_ID = "extra_id"
+        const val EXTRA_AVATAR = "extra_avatar"
 
         @StringRes
         private val TAB_TITLES = intArrayOf(

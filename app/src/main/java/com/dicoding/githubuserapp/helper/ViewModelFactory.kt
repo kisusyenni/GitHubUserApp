@@ -3,7 +3,7 @@ package com.dicoding.githubuserapp.helper
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.dicoding.githubuserapp.ui.favorite.FavoriteAddUpdateViewModel
+import com.dicoding.githubuserapp.ui.detail.UserDetailViewModel
 import com.dicoding.githubuserapp.ui.favorite.FavoriteViewModel
 
 class ViewModelFactory private constructor(private val mApplication: Application) : ViewModelProvider.NewInstanceFactory() {
@@ -24,8 +24,8 @@ class ViewModelFactory private constructor(private val mApplication: Application
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(FavoriteViewModel::class.java)) {
             return FavoriteViewModel(mApplication) as T
-        } else if (modelClass.isAssignableFrom(FavoriteAddUpdateViewModel::class.java)) {
-            return FavoriteAddUpdateViewModel(mApplication) as T
+        } else if (modelClass.isAssignableFrom(UserDetailViewModel::class.java)) {
+            return UserDetailViewModel(mApplication) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
     }

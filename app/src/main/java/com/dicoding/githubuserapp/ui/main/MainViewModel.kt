@@ -1,7 +1,9 @@
 package com.dicoding.githubuserapp.ui.main
 
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.dicoding.githubuserapp.model.ItemsItem
 import com.dicoding.githubuserapp.model.User
 import com.dicoding.githubuserapp.model.UserSearchResponse

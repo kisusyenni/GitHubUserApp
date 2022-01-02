@@ -34,12 +34,12 @@ class ListUserAdapter(private val listUser: List<User>) : RecyclerView.Adapter<L
         viewHolder.binding.tvUserUsername.text = viewHolder.itemView.context.getString(R.string.username, userData.username)
 
         // On user item click, send callback to intent to detail page
-        viewHolder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(listUser[viewHolder.adapterPosition].username) }
+        viewHolder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(userData) }
     }
 
     override fun getItemCount(): Int = listUser.size
 
     interface OnItemClickCallback {
-        fun onItemClicked(username: String)
+        fun onItemClicked(data: User)
     }
 }

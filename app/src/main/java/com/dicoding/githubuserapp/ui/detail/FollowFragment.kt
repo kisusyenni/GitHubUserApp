@@ -12,11 +12,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.githubuserapp.R
-import com.dicoding.githubuserapp.ui.adapter.ListUserAdapter
 import com.dicoding.githubuserapp.model.User
 import com.dicoding.githubuserapp.model.UserFollowersResponseItem
 import com.dicoding.githubuserapp.model.UserFollowingResponseItem
 import com.dicoding.githubuserapp.network.ApiConfig
+import com.dicoding.githubuserapp.ui.adapter.ListUserAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -64,9 +64,11 @@ class FollowFragment : Fragment() {
 
         // Set user list item on click callback and intent to detail page
         listUserAdapter.setOnItemClickCallback(object : ListUserAdapter.OnItemClickCallback {
-            override fun onItemClicked(username: String) {
+            override fun onItemClicked(data: User) {
                 val userDetailIntent = Intent(activity, UserDetailActivity::class.java)
-                userDetailIntent.putExtra(UserDetailActivity.EXTRA_USER, username)
+                userDetailIntent.putExtra(UserDetailActivity.EXTRA_USER, data.username)
+                userDetailIntent.putExtra(UserDetailActivity.EXTRA_AVATAR, data.avatar)
+                userDetailIntent.putExtra(UserDetailActivity.EXTRA_ID, data.id)
                 startActivity(userDetailIntent)
             }
         })

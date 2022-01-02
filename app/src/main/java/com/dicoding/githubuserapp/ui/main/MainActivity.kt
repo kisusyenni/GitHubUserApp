@@ -10,15 +10,21 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.githubuserapp.R
-import com.dicoding.githubuserapp.ui.adapter.ListUserAdapter
 import com.dicoding.githubuserapp.databinding.ActivityMainBinding
+import com.dicoding.githubuserapp.helper.SettingsViewModelFactory
 import com.dicoding.githubuserapp.model.User
+import com.dicoding.githubuserapp.ui.adapter.ListUserAdapter
 import com.dicoding.githubuserapp.ui.detail.UserDetailActivity
+import com.dicoding.githubuserapp.ui.settings.SettingsActivity
+import com.dicoding.githubuserapp.ui.settings.SettingsPreferences
+import com.dicoding.githubuserapp.ui.settings.SettingsViewModel
+import com.dicoding.githubuserapp.ui.settings.dataStore
 
 class MainActivity : AppCompatActivity() {
 
@@ -67,6 +73,25 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.searchQuery.observe(this, {
             query = it
         })
+
+        checkTheme()
+    }
+
+    private fun checkTheme() {
+
+        val pref = SettingsPreferences.getInstance(dataStore)
+
+        val settingsViewModel =
+            ViewModelProvider(this, SettingsViewModelFactory(pref))[SettingsViewModel::class.java]
+
+        settingsViewModel.getThemeSettings().observe(this,
+            { isDarkModeActive: Boolean ->
+                if (isDarkModeActive) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                }
+            })
     }
 
     private fun showRecycler(list: ArrayList<User>) {
@@ -77,9 +102,11 @@ class MainActivity : AppCompatActivity() {
 
             // Set user list item on click callback and intent to detail page
             listUserAdapter.setOnItemClickCallback(object : ListUserAdapter.OnItemClickCallback {
-                override fun onItemClicked(username: String) {
+                override fun onItemClicked(data:User) {
                     val userDetailIntent = Intent(this@MainActivity, UserDetailActivity::class.java)
-                    userDetailIntent.putExtra(UserDetailActivity.EXTRA_USER, username)
+                    userDetailIntent.putExtra(UserDetailActivity.EXTRA_USER, data.username)
+                    userDetailIntent.putExtra(UserDetailActivity.EXTRA_AVATAR, data.avatar)
+                    userDetailIntent.putExtra(UserDetailActivity.EXTRA_ID, data.id)
                     startActivity(userDetailIntent)
                 }
             })
@@ -135,10 +162,13 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-////        if(item.itemId == R.id.)
-//        return super.onOptionsItemSelected(item)
-//    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.settings){
+            val settingsIntent = Intent(this@MainActivity, SettingsActivity::class.java)
+            startActivity(settingsIntent)
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     private fun showLoading(isLoading: Boolean) {
         activityMainBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE

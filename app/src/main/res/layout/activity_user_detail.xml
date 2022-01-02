@@ -101,13 +101,20 @@
                 app:layout_constraintTop_toBottomOf="@id/detail_company"
                 tools:text="Location" />
 
-            <CheckBox android:id="@+id/favoriteCheckBox"
-                style="?android:attr/starStyle"
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_favorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:clickable="true"
+                android:contentDescription="@string/add_to_favorite"
+                android:focusable="true"
+                app:fabSize="mini"
+                android:backgroundTint="@color/favorite"
+                app:layout_anchorGravity="bottom|end"
                 app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/ic_favorite_24"
+                tools:layout_editor_absoluteY="16dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
