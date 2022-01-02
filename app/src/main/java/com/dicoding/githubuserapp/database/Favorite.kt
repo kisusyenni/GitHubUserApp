@@ -12,7 +12,7 @@ data class Favorite (
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     var id: Int = 0,
-    @ColumnInfo(name = "string")
+    @ColumnInfo(name = "username")
     var username: String,
     @ColumnInfo(name = "avatar")
     var avatar: String? = null

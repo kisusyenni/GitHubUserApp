@@ -13,7 +13,8 @@
         android:theme="@style/Theme.GitHubUserApp">
         <activity
             android:name=".ui.favorite.FavoriteActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".ui.settings.SettingsActivity"/>
         <activity
             android:name=".ui.settings.SettingsActivity"
             android:exported="true" />

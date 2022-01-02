@@ -62,13 +62,9 @@ class UserDetailActivity : AppCompatActivity() {
         userDetailViewModel.userDetail.observe(this, { data ->
             setUserDetail(data)
 
-//            favorite.let { favorite ->
-//                favorite?.username = username
-//                favorite?.avatar = data.avatarUrl
-//            }
             var isFavorite = false
             CoroutineScope(Dispatchers.IO).launch {
-                val count = userDetailViewModel.checkUser(id)
+                val count = userDetailViewModel.checkUser(username)
                 withContext(Dispatchers.Main) {
                     if (count > 0) {
                         setStatusFavorite(true)
@@ -89,7 +85,7 @@ class UserDetailActivity : AppCompatActivity() {
                         Toast.LENGTH_LONG
                     ).show()
                 } else {
-                    userDetailViewModel.removeFromFavorite(id)
+                    userDetailViewModel.removeFromFavorite(username)
                     Toast.makeText(
                         this@UserDetailActivity, resources.getString(R.string.remove_from_favorite),
                         Toast.LENGTH_LONG

@@ -58,7 +58,7 @@ class UserDetailViewModel(application: Application) : ViewModel() {
         getUserDetail(data)
     }
 
-    fun checkUser(id: Int) = mFavoriteRepository.check(id)
+    fun checkUser(username: String) = mFavoriteRepository.check(username)
 
     fun addToFavorite(username: String, id: Int, avatarUrl: String?) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -71,9 +71,9 @@ class UserDetailViewModel(application: Application) : ViewModel() {
         }
     }
 
-    fun removeFromFavorite(id: Int) {
+    fun removeFromFavorite(username: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            mFavoriteRepository.delete(id)
+            mFavoriteRepository.delete(username)
         }
     }
 }

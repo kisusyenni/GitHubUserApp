@@ -36,20 +36,22 @@ class FavoriteActivity : AppCompatActivity() {
         val mainViewModel = obtainViewModel(this@FavoriteActivity)
         mainViewModel.getFavoriteUsers().observe(this, { favoriteList ->
             if (favoriteList != null) {
-                showEmpty(false)
-                favoriteAdapter.setListFavorites(favoriteList)
+                if(favoriteList.isNotEmpty()) {
+                    showEmpty(false)
+                    favoriteAdapter.setListFavorites(favoriteList)
 
-                favoriteAdapter.setOnItemClickCallback(object : FavoriteAdapter.OnItemClickCallback {
-                    override fun onItemClicked(data: Favorite) {
-                        val userDetailIntent = Intent(this@FavoriteActivity, UserDetailActivity::class.java)
-                        userDetailIntent.putExtra(UserDetailActivity.EXTRA_USER, data.username)
-                        userDetailIntent.putExtra(UserDetailActivity.EXTRA_AVATAR, data.avatar)
-                        userDetailIntent.putExtra(UserDetailActivity.EXTRA_ID, data.id)
-                        startActivity(userDetailIntent)
-                    }
-                })
-            } else {
-                showEmpty(true)
+                    favoriteAdapter.setOnItemClickCallback(object : FavoriteAdapter.OnItemClickCallback {
+                        override fun onItemClicked(data: Favorite) {
+                            val userDetailIntent = Intent(this@FavoriteActivity, UserDetailActivity::class.java)
+                            userDetailIntent.putExtra(UserDetailActivity.EXTRA_USER, data.username)
+                            userDetailIntent.putExtra(UserDetailActivity.EXTRA_AVATAR, data.avatar)
+                            userDetailIntent.putExtra(UserDetailActivity.EXTRA_ID, data.id)
+                            startActivity(userDetailIntent)
+                        }
+                    })
+                } else {
+                    showEmpty(true)
+                }
             }
         })
 
@@ -64,9 +66,7 @@ class FavoriteActivity : AppCompatActivity() {
             rvFavorite?.layoutManager = GridLayoutManager(this, 2)
         }
 
-        // Bind message text view
-        errorMessage = activityFavoriteBinding?.favoriteMessage
-        errorMessage?.visibility = View.GONE
+
     }
 
     private fun obtainViewModel(activity: AppCompatActivity): FavoriteViewModel {
@@ -75,13 +75,14 @@ class FavoriteActivity : AppCompatActivity() {
     }
 
     private fun showEmpty(state: Boolean) {
+        errorMessage = activityFavoriteBinding?.favoriteMessage
         if (state) {
-            activityFavoriteBinding?.favoriteMessage?.text = resources.getString(R.string.favorite_empty)
+            errorMessage?.text = resources.getString(R.string.favorite_empty)
             activityFavoriteBinding?.favoriteMessage?.visibility = View.VISIBLE
             activityFavoriteBinding?.rvFavoriteUsers?.visibility = View.INVISIBLE
 
         } else {
-            activityFavoriteBinding?.favoriteMessage?.visibility = View.INVISIBLE
+            errorMessage?.visibility = View.INVISIBLE
         }
 
     }
