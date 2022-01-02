@@ -7,17 +7,26 @@
         <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/drawable/background.xml" value="0.2755208333333333" />
         <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/drawable/gradient_background.xml" value="0.15" />
         <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/drawable/ic_baseline_business_24.xml" value="0.15" />
+        <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/drawable/ic_baseline_dark_mode_24.xml" value="0.2755208333333333" />
         <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/drawable/ic_baseline_location_on_24.xml" value="0.15" />
+        <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/drawable/ic_dark_mode_white_24.xml" value="0.11041666666666666" />
+        <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/drawable/ic_favorite_24.xml" value="0.11041666666666666" />
         <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2755208333333333" />
+        <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/drawable/ic_light_mode_white_24.xml" value="0.2755208333333333" />
+        <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/drawable/ic_menu_white_24.xml" value="0.2755208333333333" />
+        <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/drawable/ic_settings_white_24.xml" value="0.11041666666666666" />
         <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/drawable/splash_background.xml" value="0.2755208333333333" />
+        <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/layout/activity_favorite.xml" value="0.152" />
         <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/layout/activity_main.xml" value="0.259375" />
+        <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/layout/activity_settings.xml" value="0.264" />
         <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/layout/activity_splash.xml" value="0.259375" />
-        <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/layout/activity_user_detail.xml" value="0.49902912621359224" />
+        <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/layout/activity_user_detail.xml" value="0.4" />
         <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/layout/fragment_follow.xml" value="0.13385416666666666" />
         <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/layout/fragment_follower.xml" value="0.2453125" />
         <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/layout/fragment_following.xml" value="0.24682971014492755" />
+        <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/layout/item_row_favorite.xml" value="0.536" />
         <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/layout/item_row_user.xml" value="0.4" />
-        <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/menu/option_menu.xml" value="0.13020833333333334" />
+        <entry key="..\:/Exercise/Android/GitHubUserApp/app/src/main/res/menu/option_menu.xml" value="0.264" />
       </map>
     </option>
   </component>

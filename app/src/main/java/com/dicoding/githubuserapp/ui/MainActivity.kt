@@ -21,7 +21,6 @@ import com.dicoding.githubuserapp.model.User
 import com.dicoding.githubuserapp.ui.detail.UserDetailActivity
 import com.dicoding.githubuserapp.viewmodel.MainViewModel
 
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var activityMainBinding: ActivityMainBinding
@@ -69,7 +68,6 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.searchQuery.observe(this, {
             query = it
         })
-
     }
 
     private fun showRecycler(list: ArrayList<User>) {
@@ -87,9 +85,11 @@ class MainActivity : AppCompatActivity() {
                 }
             })
             message.visibility = View.GONE
+            activityMainBinding.rvUsers.visibility = View.VISIBLE
         } else {
             message.visibility = View.VISIBLE
             message.text = resources.getString(R.string.main_empty_msg)
+            activityMainBinding.rvUsers.visibility = View.GONE
         }
     }
 
@@ -132,14 +132,16 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
         })
+
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        if(item.itemId == R.id.)
+        return super.onOptionsItemSelected(item)
     }
 
     private fun showLoading(isLoading: Boolean) {
         activityMainBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-    }
-
-    companion object {
-        private const val TAG = "MainActivity"
     }
 }

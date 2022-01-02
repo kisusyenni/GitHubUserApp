@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dicoding.githubuserapp.R
-import com.dicoding.githubuserapp.model.User
 import com.dicoding.githubuserapp.databinding.ItemRowUserBinding
+import com.dicoding.githubuserapp.model.User
 
 class ListUserAdapter(private val listUser: List<User>) : RecyclerView.Adapter<ListUserAdapter.ViewHolder>() {
 

@@ -4,14 +4,13 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.dicoding.githubuserapp.model.User
 import com.dicoding.githubuserapp.model.UserDetailResponse
 import com.dicoding.githubuserapp.network.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class UserDetailViewModel(): ViewModel() {
+class UserDetailViewModel : ViewModel() {
     private val _userDetail = MutableLiveData<UserDetailResponse>()
     val userDetail: LiveData<UserDetailResponse> = _userDetail
 

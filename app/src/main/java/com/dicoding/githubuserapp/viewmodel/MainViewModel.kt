@@ -1,19 +1,19 @@
 package com.dicoding.githubuserapp.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.dicoding.githubuserapp.model.ItemsItem
 import com.dicoding.githubuserapp.model.User
 import com.dicoding.githubuserapp.model.UserSearchResponse
 import com.dicoding.githubuserapp.model.UsersResponseItem
 import com.dicoding.githubuserapp.network.ApiConfig
+import com.dicoding.githubuserapp.settings.SettingPreferences
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel : ViewModel() {
+class MainViewModel: ViewModel() {
     private val _usersList = MutableLiveData<List<User>?>()
     val usersList: LiveData<List<User>?> = _usersList
 
@@ -119,5 +119,15 @@ class MainViewModel : ViewModel() {
     companion object{
         private const val TAG = "MainViewModel"
     }
+
+//    fun getThemeSettings(): LiveData<Boolean> {
+//        return pref.getThemeSetting().asLiveData()
+//    }
+//
+//    fun saveThemeSetting(isDarkModeActive: Boolean) {
+//        viewModelScope.launch {
+//            pref.saveThemeSetting(isDarkModeActive)
+//        }
+//    }
 
 }
