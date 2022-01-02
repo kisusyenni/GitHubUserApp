@@ -1,4 +1,4 @@
-package com.dicoding.githubuserapp.settings
+package com.dicoding.githubuserapp.ui.settings
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

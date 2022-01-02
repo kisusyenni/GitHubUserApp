@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.dicoding.githubuserapp.R
-import com.dicoding.githubuserapp.adapter.DetailPagerAdapter
+import com.dicoding.githubuserapp.ui.adapter.DetailPagerAdapter
 import com.dicoding.githubuserapp.database.Favorite
 import com.dicoding.githubuserapp.databinding.ActivityUserDetailBinding
 import com.dicoding.githubuserapp.helper.ViewModelFactory

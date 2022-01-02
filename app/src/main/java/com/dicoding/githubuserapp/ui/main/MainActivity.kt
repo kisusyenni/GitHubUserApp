@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.githubuserapp.R
-import com.dicoding.githubuserapp.adapter.ListUserAdapter
+import com.dicoding.githubuserapp.ui.adapter.ListUserAdapter
 import com.dicoding.githubuserapp.databinding.ActivityMainBinding
 import com.dicoding.githubuserapp.model.User
 import com.dicoding.githubuserapp.ui.detail.UserDetailActivity
