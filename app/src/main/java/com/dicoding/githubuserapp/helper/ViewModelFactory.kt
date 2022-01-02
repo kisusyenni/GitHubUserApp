@@ -3,8 +3,8 @@ package com.dicoding.githubuserapp.helper
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.dicoding.githubuserapp.viewmodel.FavoriteAddUpdateViewModel
-import com.dicoding.githubuserapp.viewmodel.FavoriteViewModel
+import com.dicoding.githubuserapp.ui.favorite.FavoriteAddUpdateViewModel
+import com.dicoding.githubuserapp.ui.favorite.FavoriteViewModel
 
 class ViewModelFactory private constructor(private val mApplication: Application) : ViewModelProvider.NewInstanceFactory() {
     companion object {

@@ -1,4 +1,4 @@
-package com.dicoding.githubuserapp.ui
+package com.dicoding.githubuserapp.ui.favorite
 
 import android.content.res.Configuration
 import android.os.Bundle
@@ -13,7 +13,6 @@ import com.dicoding.githubuserapp.adapter.FavoriteAdapter
 import com.dicoding.githubuserapp.databinding.ActivityFavoriteBinding
 import com.dicoding.githubuserapp.helper.ViewModelFactory
 import com.dicoding.githubuserapp.model.User
-import com.dicoding.githubuserapp.viewmodel.FavoriteViewModel
 
 class FavoriteActivity : AppCompatActivity() {
 

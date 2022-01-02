@@ -1,4 +1,4 @@
-package com.dicoding.githubuserapp.viewmodel
+package com.dicoding.githubuserapp.ui.main
 
 import android.util.Log
 import androidx.lifecycle.*
@@ -7,8 +7,6 @@ import com.dicoding.githubuserapp.model.User
 import com.dicoding.githubuserapp.model.UserSearchResponse
 import com.dicoding.githubuserapp.model.UsersResponseItem
 import com.dicoding.githubuserapp.network.ApiConfig
-import com.dicoding.githubuserapp.settings.SettingPreferences
-import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

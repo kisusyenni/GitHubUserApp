@@ -1,4 +1,4 @@
-package com.dicoding.githubuserapp.ui
+package com.dicoding.githubuserapp.ui.main
 
 import android.app.SearchManager
 import android.content.Context
@@ -19,7 +19,6 @@ import com.dicoding.githubuserapp.adapter.ListUserAdapter
 import com.dicoding.githubuserapp.databinding.ActivityMainBinding
 import com.dicoding.githubuserapp.model.User
 import com.dicoding.githubuserapp.ui.detail.UserDetailActivity
-import com.dicoding.githubuserapp.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         message.visibility = View.GONE
 
         // Initialize mainViewModel
-        mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(MainViewModel::class.java)
+        mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[MainViewModel::class.java]
 
         // Observe users list
         mainViewModel.usersList.observe(this, { users ->
@@ -136,10 +135,10 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        if(item.itemId == R.id.)
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+////        if(item.itemId == R.id.)
+//        return super.onOptionsItemSelected(item)
+//    }
 
     private fun showLoading(isLoading: Boolean) {
         activityMainBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE

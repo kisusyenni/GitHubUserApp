@@ -1,10 +1,11 @@
-package com.dicoding.githubuserapp.ui
+package com.dicoding.githubuserapp.ui.settings
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.dicoding.githubuserapp.R
 import com.dicoding.githubuserapp.databinding.ActivitySettingsBinding
+import com.dicoding.githubuserapp.ui.favorite.FavoriteActivity
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var activitySettingsBinding: ActivitySettingsBinding
